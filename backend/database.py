@@ -1,22 +1,52 @@
+import os
+
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from sqlalchemy.ext.declarative import declarative_base
 
-# MYSQL URL
+# =========================
+# DATABASE URL
+# =========================
 
-DATABASE_URL = "mysql+pymysql://root:Up20aq%404666@localhost/pharma_analytics"
+DATABASE_URL = os.getenv(
 
-# ENGINE
+    "DATABASE_URL",
 
-engine = create_engine(
-
-    DATABASE_URL,
-
-    pool_pre_ping=True
+    "sqlite:///./pharma.db"
 
 )
 
+# =========================
+# ENGINE
+# =========================
+
+if DATABASE_URL.startswith("sqlite"):
+
+    engine = create_engine(
+
+        DATABASE_URL,
+
+        connect_args={
+
+            "check_same_thread": False
+
+        }
+
+    )
+
+else:
+
+    engine = create_engine(
+
+        DATABASE_URL,
+
+        pool_pre_ping=True
+
+    )
+
+# =========================
 # SESSION
+# =========================
 
 SessionLocal = sessionmaker(
 
@@ -28,11 +58,15 @@ SessionLocal = sessionmaker(
 
 )
 
+# =========================
 # BASE
+# =========================
 
 Base = declarative_base()
 
+# =========================
 # DB DEPENDENCY
+# =========================
 
 def get_db():
 
