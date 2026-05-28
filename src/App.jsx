@@ -80,7 +80,7 @@ export default function App() {
     try{
 
       let url =
-        "http://127.0.0.1:8000/dashboard";
+        "${import.meta.env.VITE_API_URL}/dashboard";
 
       let params = [];
 
