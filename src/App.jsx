@@ -353,7 +353,7 @@ export default function App() {
 
         <h1 className="text-5xl font-bold text-white">
 
-          Pharma Analytics Dashboard
+          Sales Analytics Dashboard
 
         </h1>
 
