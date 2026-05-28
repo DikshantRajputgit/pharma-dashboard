@@ -80,7 +80,7 @@ export default function App() {
     try{
 
       let url =
-        "${import.meta.env.VITE_API_URL}/dashboard";
+        "https://pharma-dashboard-r7x3.onrender.com/dashboard";
 
       let params = [];
 
