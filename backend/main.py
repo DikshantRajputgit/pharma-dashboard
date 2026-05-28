@@ -20,31 +20,6 @@ Base.metadata.create_all(bind=engine)
 
 app = FastAPI()
 
-
-@app.get("/clear-db")
-def clear_db():
-
-    from database import SessionLocal
-    from models import SalesData
-
-    db = SessionLocal()
-
-    try:
-
-        db.query(SalesData).delete()
-
-        db.commit()
-
-        return {"status": "database cleared"}
-
-    except Exception as e:
-
-        return {"error": str(e)}
-
-    finally:
-
-        db.close()
-
 # =========================
 # CORS FIX
 # =========================
