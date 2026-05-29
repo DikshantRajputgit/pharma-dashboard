@@ -55,7 +55,7 @@ async def upload_excel(
         "Cost",
         "Cost Amt",
         "Sales Person",
-        "Batch No."
+      
     ]
 
     missing_columns = [
