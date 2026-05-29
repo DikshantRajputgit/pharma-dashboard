@@ -193,7 +193,17 @@ export default function App() {
 
   const kpis =
     dashboardData.kpis || {};
-
+  const top20Customers =
+    (dashboardData.topCustomers || []).slice(0, 20);
+  
+  const top20Products =
+    (dashboardData.topProducts || []).slice(0, 20);
+  
+  const top10FastMoving =
+    (dashboardData.fastMoving || []).slice(0, 10);
+  
+  const top10SlowMoving =
+    (dashboardData.slowMoving || []).slice(0, 10);
   // =========================
   // FORMAT
   // =========================
