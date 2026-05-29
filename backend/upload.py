@@ -17,19 +17,60 @@ from models import SalesData
 
 router = APIRouter()
 
-# =========================
-# UPLOAD API
-# =========================
-
 @router.post("/upload")
-
 async def upload_excel(
-
     file: UploadFile = File(...),
-
     db: Session = Depends(get_db)
-
 ):
+
+    df = pd.read_excel(
+        file.file,
+        engine="openpyxl"
+    )
+
+    df.columns = [
+        str(col).strip()
+        for col in df.columns
+    ]
+
+    # =========================
+    # REQUIRED COLUMNS CHECK
+    # =========================
+
+    required_columns = [
+        "Party Name",
+        "District",
+        "State",
+        "Item Name",
+        "Bill No.",
+        "Date",
+        "Expiry Date",
+        "Qty",
+        "Free Qty",
+        "NET QTY",
+        "Rate",
+        "Discount",
+        "Amount",
+        "MRP",
+        "Cost",
+        "Cost Amt",
+        "Sales Person",
+        "Batch No."
+    ]
+
+    missing_columns = [
+        col
+        for col in required_columns
+        if col not in df.columns
+    ]
+
+    if missing_columns:
+        return {
+            "success": False,
+            "message": "Missing required columns",
+            "missing_columns": missing_columns,
+            "required_columns": required_columns
+        }
 
     # =========================
     # READ EXCEL
