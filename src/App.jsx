@@ -711,10 +711,13 @@ export default function App() {
           <BarChart
             width={900}
             height={
-              (dashboardData.topCustomers?.length || 1) * 35
+              Math.max(
+                500,
+                ((dashboardData.topCustomers || []).slice(0,20).length * 35)
+              )
             }
             data={
-              dashboardData.topCustomers || []
+              (dashboardData.topCustomers || []).slice(0,20)
             }
             layout="vertical"
             margin={{
@@ -766,10 +769,13 @@ export default function App() {
           <BarChart
             width={900}
             height={
-              (dashboardData.topProducts?.length || 1) * 35
+              Math.max(
+                500,
+                ((dashboardData.topProducts || []).slice(0,20).length * 35)
+              )
             }
             data={
-              dashboardData.topProducts || []
+              (dashboardData.topProducts || []).slice(0,20)
             }
             layout="vertical"
             margin={{
