@@ -60,4 +60,11 @@ def home():
             "Pharma Analytics API Running"
 
     }
+@app.get("/db-test")
+def db_test():
+    from sqlalchemy import text
 
+    with engine.connect() as conn:
+        conn.execute(text("SELECT 1"))
+
+    return {"status": "connected"}
