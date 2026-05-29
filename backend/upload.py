@@ -109,8 +109,7 @@ async def upload_excel(
 
         "Cost Amt",
 
-        "AVG Sales"
-
+      
     ]
 
     for col in numeric_columns:
@@ -122,6 +121,23 @@ async def upload_excel(
             errors="coerce"
 
         ).fillna(0)
+
+
+    # =========================
+    # AVG MONTHLY SALES
+    # =========================
+    
+    party_avg_sales = (
+        df.groupby("Party Name")["Amount"]
+          .sum()
+          .to_dict()
+    )
+    
+    party_months = (
+        df.groupby("Party Name")["Month"]
+          .nunique()
+          .to_dict()
+    )
 
     # =========================
     # PROFIT
@@ -245,8 +261,18 @@ async def upload_excel(
             cost_amt =
                 float(row["Cost Amt"]),
 
-            avg_sales =
-                float(row["AVG Sales"]),
+            avg_sales = (
+                party_avg_sales[
+                    row["Party Name"]
+                ]
+                /
+                max(
+                    1,
+                    party_months[
+                        row["Party Name"]
+                    ]
+                )
+            )
 
             sales_person =
                 str(row["Sales Person"]),
